@@ -52,7 +52,13 @@ public class WarGame extends Game {
         // At this point, we can either hold the player and computer cards here, or transfer them into the
         // player objects
         
-        // 
+        // We need to draw the top card in each players hand to compare the values
+        // userDeck.getTopCard();
+        // computerDeck.getTopCard();
+        
+        // We need to compare the values of both cards that were drawn 
+        // if (userCard.value > computerCard.value) -> userDeck.add(computerCard);
+        // if 
     }
     
     @Override
