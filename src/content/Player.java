@@ -5,6 +5,8 @@
  */
 package content;
 
+import java.util.ArrayList;
+
 /**
  * A class that models each Player in the game. Players have an identifier, which should be unique.
  *
@@ -14,6 +16,7 @@ package content;
 public abstract class Player {
 
     private String name; //the unique name for this player
+    private GroupOfCards cards;
 
     /**
      * A constructor that allows you to set the player's unique ID
@@ -38,6 +41,21 @@ public abstract class Player {
      */
     public void setName(String name) {
         this.name = name;
+    }
+    
+    /**
+     * @return the players cards
+     */
+    public GroupOfCards getCards() {
+        return cards;
+    }
+    
+    /**
+     * 
+     * @param cards the cards the player will have
+     */
+    public void setCards(GroupOfCards cards) {
+        this.cards = cards;
     }
 
     /**

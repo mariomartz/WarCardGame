@@ -13,6 +13,8 @@ import java.util.ArrayList;
 public class WarGame extends Game {
     
     private GroupOfCards deck;
+    private Player Player1;
+    private Player Computer;
     private int cardsInDeck = 52;
     
     public WarGame() {
@@ -29,32 +31,47 @@ public class WarGame extends Game {
         Player computer = new WarPlayer("Computer");
         ArrayList<Player> playerList = new ArrayList<Player>();
         playerList.add(user);
+        this.Player1 = user;
         playerList.add(computer);
+        this.Computer = computer;
         setPlayers(playerList);
     }
     
     @Override
     public void play() {
         // Instantiate GroupOfCards to create deck made up of 52 cards
-        deck = new GroupOfCards(cardsInDeck);
+        deck = new GroupOfCards(cardsInDeck);        
+        // Populates the deck of cards
+        for (int r = 1; r < 14; r++) {
+            for (int c = 0; c < 4; c++) {
+                deck.getCards().add(new Card(r, Card.suits[c]));
+            }
+        }           
         // Call shuffle method from GroupOfCards
         deck.shuffle();
         // Create 2 smaller GroupOfCards based on the shuffled cards in the deck
-        ArrayList<Card> userCards = new ArrayList<Card>();
-        ArrayList<Card> computerCards =  new ArrayList<Card>();
-        for (int i = 0; i < cardsInDeck; i++) {
-            if (i < cardsInDeck/2) {
-                //userCards.add(deck.getTopCard());
+        ArrayList<Card> userCards = new ArrayList<>();
+        ArrayList<Card> computerCards =  new ArrayList<>();
+        
+        for (Card card : deck.getCards()) {
+            if (card.getCardNum() % 2 == 0) {
+                userCards.add(card);
             } else {
-                //computerCards.add(deck.getTopCard());
+                computerCards.add(card);
             }
         }
-        // At this point, we can either hold the player and computer cards here, or transfer them into the
-        // player objects
         
-        // We need to draw the top card in each players hand to compare the values
-        // userDeck.getTopCard();
-        // computerDeck.getTopCard();
+        GroupOfCards playerDeck = new GroupOfCards(userCards.size());
+        GroupOfCards computerDeck = new GroupOfCards(computerCards.size());
+        
+        playerDeck.setCards(userCards);
+        computerDeck.setCards(userCards);
+        
+        Player1.setCards(playerDeck);
+        Computer.setCards(computerDeck); // This could be done better maybe (Computer)
+        
+        Card card1 = Player1.getCards().getTopCard();
+        Card card2 = Computer.getCards().getTopCard();
         
         // We need to compare the values of both cards that were drawn 
         // if (userCard.value > computerCard.value) -> userDeck.add(computerCard);
