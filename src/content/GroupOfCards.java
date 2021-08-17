@@ -33,6 +33,10 @@ public class GroupOfCards {
     public ArrayList<Card> getCards() {
         return cards;
     }
+    
+    public Card getTopCard() {
+        return cards.get(size-1);
+    }
 
     public void shuffle() {
         Collections.shuffle(cards);
