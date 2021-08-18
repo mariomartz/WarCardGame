@@ -17,6 +17,7 @@ public class WarGame extends Game {
     private Player Player1;
     private Player Computer;
     private int cardsInDeck = 52;
+    private Player GameWinner = null;
     
     public WarGame() {
         super("War");
@@ -93,22 +94,17 @@ public class WarGame extends Game {
                 computerCards.add(playerTopCard);
                 computerCards.add(computerTopCard);
             } else {
-                Player warWinner = startWar();
-                //System.out.println(warWinner == null ? "True" : "False");
-                while (warWinner != null) {
-                    if (warWinner == Player1) {
-                        userCards.addAll(warPool);
-                    } else if (warWinner == Computer) {
-                        computerCards.addAll(warPool);
-                    }
-                    warPool.clear();
-                }
+                warPool.add(playerTopCard);
+                warPool.add(computerTopCard);
+                startWar(userCards, computerCards);
             }
             index++;
         }
-        System.out.println(userCards.size() + "");
-        System.out.println(computerCards.size() + "");
-        System.out.println("Done");
+        if (userCards.size() > computerCards.size()) {
+            GameWinner = Player1;
+        } else if (userCards.size() < computerCards.size()) {
+            GameWinner = Computer;
+        }
         // We need to compare the values of both cards that were drawn 
         
     }
@@ -131,8 +127,8 @@ public class WarGame extends Game {
         }  
     }
     
-    public Player startWar() {  
-        if (Player1.getCards().getSize() > 3 && Computer.getCards().getSize() > 3) {
+    public void startWar(ArrayList<Card> userCard, ArrayList<Card> computerCard) {
+        if (Player1.getCards().getSize() > 4 && Computer.getCards().getSize() > 4) {
             int war = 3; // 3 Cards into the pool        
             for (int i = 0; i < war; i++) {
                 warPool.add(Player1.getCards().getTopCard());
@@ -143,18 +139,26 @@ public class WarGame extends Game {
         Card computerFinalCard = Computer.getCards().getTopCard();
         warPool.add(playerFinalCard);
         warPool.add(computerFinalCard);
-        if (compareCards(playerFinalCard, computerFinalCard) == Player1) {
-            return Player1;
-        } else if (compareCards(playerFinalCard, computerFinalCard) == Computer) {
-            return Computer;
+        Player warWinner = compareCards(playerFinalCard, computerFinalCard);
+        if (warWinner == Player1) {
+            userCard.addAll(warPool);
+            warPool.clear();
+        } else if (warWinner == Computer) {
+            computerCard.addAll(warPool);
+            warPool.clear();
         } else {
-            return null;
+            startWar(userCard, computerCard);
         }
-    }
-    
+    }    
     
     @Override
     public void declareWinner() {
-        
+        if (GameWinner == null) {
+            System.out.println("No winner!");
+        } else if (GameWinner == Player1) {
+            System.out.println("Winner is Player 1.");
+        } else if (GameWinner == Computer) {
+            System.out.println("Winner is Computer.");
+        }
     }
 }
