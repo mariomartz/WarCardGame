@@ -5,7 +5,7 @@ import content.WarPlayer;
 import java.util.Scanner;
 
 /**
- * This class +++Insert Description Here+++
+ * This class initiates the game and its related classes.
  *
  * @author Mario Martinez
  */

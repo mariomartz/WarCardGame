@@ -41,6 +41,8 @@ public class WarGame extends Game {
     
     @Override
     public void play() {
+        System.out.println("");
+        System.out.println("Starting game!");
         // Instantiate GroupOfCards to create deck made up of 52 cards
         deck = new GroupOfCards(cardsInDeck);        
         // Populates the deck of cards, 4 suits and 13 cards for each suit
@@ -51,6 +53,7 @@ public class WarGame extends Game {
         }           
         // Call shuffle method from GroupOfCards and shuffle deck
         deck.shuffle();
+        System.out.println("Deck built and shuffled!");
         // Create 2 ArrayList's based on the shuffled cards in the deck (one for the user, one for the computer)
         ArrayList<Card> userCards = new ArrayList<>();
         ArrayList<Card> computerCards =  new ArrayList<>();
@@ -76,28 +79,44 @@ public class WarGame extends Game {
         // Clear the userCards ArrayList and the computerCards ArrayList to be used as each players discard pile
         userCards.clear();
         computerCards.clear();
+        System.out.println("Deck split and distributed!");
+        System.out.println("");
         // Draw the top card in each players deck
         int index = 0;
         boolean runGame = true;
         while (runGame) {
+            // When a player runs out of cards, the game ends
             if (Player1.getCards().getSize() == 0 || Computer.getCards().getSize() == 0) {
                 runGame = false;
                 break;
             }
+            System.out.println("Drawing cards!");
+            // Draws top card of both players decks
             Card playerTopCard = Player1.getCards().getTopCard();
+            System.out.println(Player1.getName() + " drew: " + playerTopCard.toString());
             Card computerTopCard = Computer.getCards().getTopCard();
+            System.out.println(Computer.getName() + " drew: " + computerTopCard.toString());
+            System.out.println("");
+            
+            //Compares the 2 cards that were drawn
+            System.out.println("Comparing cards!");
             Player roundWinner = compareCards(playerTopCard, computerTopCard);
             if (roundWinner == Player1) {
+                System.out.println(Player1.getName() + " wins the hand!");
                 userCards.add(playerTopCard);
                 userCards.add(computerTopCard);
             } else if (roundWinner == Computer) {
+                System.out.println(Computer.getName() + " wins the hand!");
                 computerCards.add(playerTopCard);
                 computerCards.add(computerTopCard);
             } else {
+                System.out.println("Stalemate! Cards added to pot.");
+                System.out.println("");
                 warPool.add(playerTopCard);
                 warPool.add(computerTopCard);
                 startWar(userCards, computerCards);
             }
+            System.out.println("");
             index++;
         }
         if (userCards.size() > computerCards.size()) {
@@ -127,6 +146,7 @@ public class WarGame extends Game {
     }
     
     public void startWar(ArrayList<Card> userCard, ArrayList<Card> computerCard) {
+        System.out.println("War has broken out! Each player draws 4 cards.");
         if (Player1.getCards().getSize() > 3 && Computer.getCards().getSize() > 3) {
             int war = 3; // 3 Cards into the pool        
             for (int i = 0; i < war; i++) {
@@ -135,19 +155,26 @@ public class WarGame extends Game {
             }
         }
         Card playerFinalCard = Player1.getCards().getTopCard();
+        System.out.println(Player1.getName() + "'s top card is: " + playerFinalCard.toString());
         Card computerFinalCard = Computer.getCards().getTopCard();
+        System.out.println(Computer.getName() + "'s top card is: " + computerFinalCard.toString());
         warPool.add(playerFinalCard);
         warPool.add(computerFinalCard);
+        System.out.println("");
         Player warWinner = compareCards(playerFinalCard, computerFinalCard);
         if (warWinner == Player1) {
+            System.out.println(Player1.getName() + " wins the war! Pot goes to winner!");
             userCard.addAll(warPool);
             warPool.clear();
         } else if (warWinner == Computer) {
+            System.out.println(Computer.getName() + " wins the war! Pot goes to winner!");
             computerCard.addAll(warPool);
             warPool.clear();
         } else {
+            System.out.println("Stalemate! A new war will soon breakout...");
             startWar(userCard, computerCard);
         }
+        System.out.println("");
     }    
     
     @Override
