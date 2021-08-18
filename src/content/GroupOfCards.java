@@ -30,12 +30,12 @@ public class GroupOfCards {
      *
      * @return the group of cards.
      */
-    public ArrayList<Card> getCards() {
+    public ArrayList<Card> getCardDeck() {
         return cards;
     }
     
-    public void setCards(ArrayList<Card> cards) {
-        this.cards = cards;
+    public void setCardDeck(ArrayList<Card> cards) {
+        this.cards = new ArrayList(cards);
     }
     
     public ArrayList<Card> drawCards(int numCardsDrawn) {
@@ -51,6 +51,7 @@ public class GroupOfCards {
     public Card getTopCard() {
         Card topCard = cards.get(size-1);
         cards.remove(cards.get(size-1));
+        size--;
         return topCard;
     }
 

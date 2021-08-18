@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class WarGame extends Game {
     
     private GroupOfCards deck;
+    private ArrayList<Card> warPool = new ArrayList<>();
     private Player Player1;
     private Player Computer;
     private int cardsInDeck = 52;
@@ -44,7 +45,7 @@ public class WarGame extends Game {
         // Populates the deck of cards, 4 suits and 13 cards for each suit
         for (int r = 1; r < 14; r++) {
             for (int c = 0; c < 4; c++) {
-                deck.getCards().add(new Card(r, Card.suits[c]));
+                deck.getCardDeck().add(new Card(r, Card.suits[c]));
             }
         }           
         // Call shuffle method from GroupOfCards and shuffle deck
@@ -52,30 +53,61 @@ public class WarGame extends Game {
         // Create 2 ArrayList's based on the shuffled cards in the deck (one for the user, one for the computer)
         ArrayList<Card> userCards = new ArrayList<>();
         ArrayList<Card> computerCards =  new ArrayList<>();
+        
+        
         // Even cards are added to user ArrayList, odd cards are added to computer ArrayList
-        for (Card card : deck.getCards()) {
-            if (card.getCardNum() % 2 == 0) {
-                userCards.add(card);
+        for (int i = 0; i < deck.getCardDeck().size(); i++) {
+            if (i % 2 == 0) {
+                userCards.add(deck.getCardDeck().get(i));
             } else {
-                computerCards.add(card);
+                computerCards.add(deck.getCardDeck().get(i));
             }
         }
         // Create 2 GroupOfCards deck objects using the size of the 2 ArrayLists
         GroupOfCards playerDeck = new GroupOfCards(userCards.size());
         GroupOfCards computerDeck = new GroupOfCards(computerCards.size());
         // Set the cards in these GroupOfCards objects to the ones that were placed in the 2 ArrayLists earlier
-        playerDeck.setCards(userCards);
-        computerDeck.setCards(userCards);
+        playerDeck.setCardDeck(userCards);
+        computerDeck.setCardDeck(computerCards);
         // Give the 2 GroupsOfCards to the player objects
         Player1.setCards(playerDeck);
-        Computer.setCards(computerDeck); // This could be done better maybe (Computer)
+        Computer.setCards(computerDeck);
         // Clear the userCards ArrayList and the computerCards ArrayList to be used as each players discard pile
         userCards.clear();
         computerCards.clear();
         // Draw the top card in each players deck
-        Card playerTopCard = Player1.getCards().getTopCard();
-        Card computerTopCard = Computer.getCards().getTopCard();
-        
+        int index = 0;
+        boolean runGame = true;
+        while (runGame) {
+            if (Player1.getCards().getSize() == 0 || Computer.getCards().getSize() == 0) {
+                runGame = false;
+                break;
+            }
+            Card playerTopCard = Player1.getCards().getTopCard();
+            Card computerTopCard = Computer.getCards().getTopCard();
+            Player roundWinner = compareCards(playerTopCard, computerTopCard);
+            if (roundWinner == Player1) {
+                userCards.add(playerTopCard);
+                userCards.add(computerTopCard);
+            } else if (roundWinner == Computer) {
+                computerCards.add(playerTopCard);
+                computerCards.add(computerTopCard);
+            } else {
+                Player warWinner = startWar();
+                while (warWinner != null) {
+                    if (warWinner == Player1) {
+                        userCards.addAll(warPool);
+                    } else if (warWinner == Computer) {
+                        computerCards.addAll(warPool);
+                    }
+                    warPool.clear();
+                }
+            }
+            index++;
+        }
+        System.out.println(userCards.size() + "");
+        System.out.println(computerCards.size() + "");
+        System.out.println("Done");
         // We need to compare the values of both cards that were drawn 
         
     }
@@ -97,6 +129,29 @@ public class WarGame extends Game {
             return null;
         }  
     }
+    
+    public Player startWar() {  
+        if (Player1.getCards().getSize() > 4 && Computer.getCards().getSize() > 4) {
+            int war = 3; // 3 Cards into the pool        
+            for (int i = 0; i < war; i++) {
+                warPool.add(Player1.getCards().getTopCard());
+                warPool.add(Computer.getCards().getTopCard());
+            }
+        }
+        Card playerFinalCard = Player1.getCards().getTopCard();
+        Card computerFinalCard = Computer.getCards().getTopCard();
+        warPool.add(playerFinalCard);
+        warPool.add(computerFinalCard);
+        if (compareCards(playerFinalCard, computerFinalCard) == Player1) {
+            return Player1;
+        } else if (compareCards(playerFinalCard, computerFinalCard) == Computer) {
+            return Computer;
+        } else {
+            return null;
+        }
+    }
+    
+    
     @Override
     public void declareWinner() {
         

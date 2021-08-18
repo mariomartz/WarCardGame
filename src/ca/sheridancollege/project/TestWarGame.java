@@ -29,7 +29,11 @@ public class TestWarGame {
         
         // Creates the player array list for the game to run
         warGame.createPlayerList(user);
+        try {
         warGame.play();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         
     }
 }
