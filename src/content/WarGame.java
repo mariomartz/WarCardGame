@@ -127,7 +127,7 @@ public class WarGame extends Game {
     }
     
     public void startWar(ArrayList<Card> userCard, ArrayList<Card> computerCard) {
-        if (Player1.getCards().getSize() > 4 && Computer.getCards().getSize() > 4) {
+        if (Player1.getCards().getSize() > 3 && Computer.getCards().getSize() > 3) {
             int war = 3; // 3 Cards into the pool        
             for (int i = 0; i < war; i++) {
                 warPool.add(Player1.getCards().getTopCard());
