@@ -76,12 +76,6 @@ public class WarGame extends Game {
         Card card1 = Player1.getCards().getTopCard();
         Card card2 = Computer.getCards().getTopCard();
         
-        //Takes the cardsInDeck and splits them up into 2 piles for Player1 and Player2
-        for(int i = 0; i < 26; i++) {
-            playerDeck.add(cardsInDeck.getTopCard());
-            computerDeck.add(cardsInDeck.getTopCard());
-        }
-        
         // We need to compare the values of both cards that were drawn 
         // if (userCard.value > computerCard.value) -> userDeck.add(computerCard);
         // if 
