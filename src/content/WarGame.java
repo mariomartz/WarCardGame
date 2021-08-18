@@ -60,15 +60,18 @@ public class WarGame extends Game {
                 computerCards.add(card);
             }
         }
-        // Create 2 GroupOfCards deck objects using the 2 ArrayLists, one for the player and one for the computer
+        // Create 2 GroupOfCards deck objects using the size of the 2 ArrayLists
         GroupOfCards playerDeck = new GroupOfCards(userCards.size());
         GroupOfCards computerDeck = new GroupOfCards(computerCards.size());
-        
+        // Set the cards in these GroupOfCards objects to the ones that were placed in the 2 ArrayLists earlier
         playerDeck.setCards(userCards);
         computerDeck.setCards(userCards);
-        
+        // Give the 2 GroupsOfCards to the player objects
         Player1.setCards(playerDeck);
         Computer.setCards(computerDeck); // This could be done better maybe (Computer)
+        // Clear the userCards ArrayList and the computerCards ArrayList to be used as each players discard pile
+        userCards.clear();
+        computerCards.clear();
         // Draw the top card in each players deck
         Card card1 = Player1.getCards().getTopCard();
         Card card2 = Computer.getCards().getTopCard();
