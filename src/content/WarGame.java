@@ -41,18 +41,18 @@ public class WarGame extends Game {
     public void play() {
         // Instantiate GroupOfCards to create deck made up of 52 cards
         deck = new GroupOfCards(cardsInDeck);        
-        // Populates the deck of cards
+        // Populates the deck of cards, 4 suits and 13 cards for each suit
         for (int r = 1; r < 14; r++) {
             for (int c = 0; c < 4; c++) {
                 deck.getCards().add(new Card(r, Card.suits[c]));
             }
         }           
-        // Call shuffle method from GroupOfCards
+        // Call shuffle method from GroupOfCards and shuffle deck
         deck.shuffle();
-        // Create 2 smaller GroupOfCards based on the shuffled cards in the deck
+        // Create 2 ArrayList's based on the shuffled cards in the deck (one for the user, one for the computer)
         ArrayList<Card> userCards = new ArrayList<>();
         ArrayList<Card> computerCards =  new ArrayList<>();
-        
+        // Even cards are added to user ArrayList, odd cards are added to computer ArrayList
         for (Card card : deck.getCards()) {
             if (card.getCardNum() % 2 == 0) {
                 userCards.add(card);
@@ -60,7 +60,7 @@ public class WarGame extends Game {
                 computerCards.add(card);
             }
         }
-        
+        // Create 2 GroupOfCards deck objects using the 2 ArrayLists, one for the player and one for the computer
         GroupOfCards playerDeck = new GroupOfCards(userCards.size());
         GroupOfCards computerDeck = new GroupOfCards(computerCards.size());
         
@@ -69,7 +69,7 @@ public class WarGame extends Game {
         
         Player1.setCards(playerDeck);
         Computer.setCards(computerDeck); // This could be done better maybe (Computer)
-        
+        // Draw the top card in each players deck
         Card card1 = Player1.getCards().getTopCard();
         Card card2 = Computer.getCards().getTopCard();
         
