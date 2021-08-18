@@ -105,7 +105,6 @@ public class WarGame extends Game {
         } else if (userCards.size() < computerCards.size()) {
             GameWinner = Computer;
         }
-        // We need to compare the values of both cards that were drawn 
         
     }
 
