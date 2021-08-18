@@ -94,6 +94,7 @@ public class WarGame extends Game {
                 computerCards.add(computerTopCard);
             } else {
                 Player warWinner = startWar();
+                System.out.println(warWinner == null ? "True" : "False");
                 while (warWinner != null) {
                     if (warWinner == Player1) {
                         userCards.addAll(warPool);
@@ -131,7 +132,7 @@ public class WarGame extends Game {
     }
     
     public Player startWar() {  
-        if (Player1.getCards().getSize() > 4 && Computer.getCards().getSize() > 4) {
+        if (Player1.getCards().getSize() > 3 && Computer.getCards().getSize() > 3) {
             int war = 3; // 3 Cards into the pool        
             for (int i = 0; i < war; i++) {
                 warPool.add(Player1.getCards().getTopCard());
