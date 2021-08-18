@@ -94,7 +94,7 @@ public class WarGame extends Game {
                 computerCards.add(computerTopCard);
             } else {
                 Player warWinner = startWar();
-                System.out.println(warWinner == null ? "True" : "False");
+                //System.out.println(warWinner == null ? "True" : "False");
                 while (warWinner != null) {
                     if (warWinner == Player1) {
                         userCards.addAll(warPool);
