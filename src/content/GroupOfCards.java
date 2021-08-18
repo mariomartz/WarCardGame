@@ -38,8 +38,20 @@ public class GroupOfCards {
         this.cards = cards;
     }
     
+    public ArrayList<Card> drawCards(int numCardsDrawn) {
+        ArrayList<Card> drawnCards = new ArrayList<>();
+        int cardsLeft = (cards.size() - numCardsDrawn);
+        for (int i = cards.size(); i > cardsLeft; i--) {
+            drawnCards.add(cards.get(i));
+            cards.remove(i);
+        }
+        return drawnCards;
+    }
+    
     public Card getTopCard() {
-        return cards.get(size-1);
+        Card topCard = cards.get(size-1);
+        cards.remove(cards.get(size-1));
+        return topCard;
     }
 
     public void shuffle() {

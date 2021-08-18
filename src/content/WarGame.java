@@ -73,15 +73,30 @@ public class WarGame extends Game {
         userCards.clear();
         computerCards.clear();
         // Draw the top card in each players deck
-        Card card1 = Player1.getCards().getTopCard();
-        Card card2 = Computer.getCards().getTopCard();
+        Card playerTopCard = Player1.getCards().getTopCard();
+        Card computerTopCard = Computer.getCards().getTopCard();
         
         // We need to compare the values of both cards that were drawn 
-        // if (userCard.value > computerCard.value) -> userDeck.add(computerCard);
-        // if 
         
     }
-    
+
+    public Player compareCards(Card playerCard, Card computerCard) {
+        // Holds the value of each card in a variable so that it can be referenced quickly
+        int playerCardValue = playerCard.getCardNum();
+        int computerCardValue = computerCard.getCardNum();
+        // Checks if the value of the cards are equal
+        if (playerCardValue != computerCardValue) {
+            // if they are not equal, the winner will be the player with the higher value card
+            if (playerCardValue > computerCardValue) {
+                return Player1;
+            } else {
+                return Computer;
+            }
+            // if they are equal, the players go to war
+        } else {
+            return null;
+        }  
+    }
     @Override
     public void declareWinner() {
         
